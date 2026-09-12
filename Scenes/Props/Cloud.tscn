@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Mover.gd" id="1_mover"]
+[ext_resource type="PackedScene" path="res://Assets/Models/SkyIslands/Cloud.glb" id="2_model"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cloud"]
+albedo_color = Color(1, 1, 1, 1)
+roughness = 1.0
+
+[node name="Cloud" type="Node3D"]
+script = ExtResource("1_mover")
+move_offset = Vector3(6, 0, 0)
+duration = 14.0
+pause_time = 0.0
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+
+[node name="Cloud_2" parent="Model/RootNode" index="0"]
+material_override = SubResource("StandardMaterial3D_cloud")
+cast_shadow = 0
+
+[editable path="Model"]

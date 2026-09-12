@@ -1,0 +1,72 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/WinScreen.gd" id="1_win"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 110
+font_color = Color(1, 0.86, 0.32, 1)
+outline_size = 28
+outline_color = Color(0.45, 0.25, 0.5, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_text"]
+font_size = 32
+outline_size = 10
+outline_color = Color(0.45, 0.25, 0.5, 1)
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_win")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.98, 0.62, 0.42, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="Title" type="Label" parent="Center/Menu"]
+layout_mode = 2
+text = "You Win!"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Center/Menu"]
+layout_mode = 2
+text = "You collected every fruit on the Sky Islands!"
+label_settings = SubResource("LabelSettings_text")
+horizontal_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="Center/Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 36
+text = "Play Again"
+
+[node name="MenuButton" type="Button" parent="Center/Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 36
+text = "Main Menu"

@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pendulum.gd" id="1_pendulum"]
+[ext_resource type="Script" path="res://Scripts/Hazard.gd" id="2_hazard"]
+[ext_resource type="PackedScene" path="res://Assets/Models/SkyIslands/SpikyBall.glb" id="3_model"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_anchor"]
+size = Vector3(0.6, 0.3, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_chain"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 4.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_metal"]
+albedo_color = Color(0.3, 0.3, 0.35, 1)
+metallic = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ball"]
+radius = 0.7
+
+[node name="SpikyBall" type="Node3D"]
+script = ExtResource("1_pendulum")
+
+[node name="Anchor" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_anchor")
+surface_material_override/0 = SubResource("StandardMaterial3D_metal")
+
+[node name="Chain" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+mesh = SubResource("CylinderMesh_chain")
+surface_material_override/0 = SubResource("StandardMaterial3D_metal")
+
+[node name="Ball" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+script = ExtResource("2_hazard")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
+shape = SubResource("SphereShape3D_ball")
+
+[node name="Model" parent="Ball" instance=ExtResource("3_model")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)

@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bk5n0tn4k1l0c"]
+
+[ext_resource type="Script" path="res://Scripts/Coin.gd" id="1_b8wip"]
+[ext_resource type="Texture2D" uid="uid://drk46pes52whg" path="res://Assets/Textures/particle.png" id="3_sjsc2"]
+[ext_resource type="PackedScene" path="res://Assets/Models/SkyIslands/Fruit.glb" id="4_fruit"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pickup"]
+radius = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0l53i"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_sjsc2")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_r7xbe"]
+material = SubResource("StandardMaterial3D_0l53i")
+
+[sub_resource type="Curve" id="Curve_lwc68"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.495025, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_db7aj"]
+colors = PackedColorArray(0.996078, 0.909804, 0.352941, 1, 1, 1, 1, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_an4m6"]
+radius = 3.47933
+
+[node name="Coin" type="Area3D" groups=["Coin"]]
+script = ExtResource("1_b8wip")
+
+[node name="FruitModel" parent="." instance=ExtResource("4_fruit")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.13, -0.1, 0.01)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_pickup")
+
+[node name="Sparkles" type="CPUParticles3D" parent="."]
+mesh = SubResource("QuadMesh_r7xbe")
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+damping_min = 0.5
+damping_max = 0.5
+scale_amount_min = 0.15
+scale_amount_max = 0.15
+scale_amount_curve = SubResource("Curve_lwc68")
+color_ramp = SubResource("Gradient_db7aj")
+
+[node name="Range" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Range"]
+shape = SubResource("SphereShape3D_an4m6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]

@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://Assets/Models/SkyIslands/Bush.glb" id="1_model"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_leaves"]
+albedo_color = Color(0.33, 0.62, 0.3, 1)
+roughness = 0.9
+
+[node name="Bush" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.1, 0)
+
+[node name="Bush_Common" parent="Model/RootNode" index="0"]
+material_override = SubResource("StandardMaterial3D_leaves")
+
+[editable path="Model"]

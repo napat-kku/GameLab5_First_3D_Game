@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Hazard.gd" id="1_hazard"]
+[ext_resource type="Script" path="res://Scripts/Rotator.gd" id="2_rotator"]
+[ext_resource type="PackedScene" path="res://Assets/Models/SkyIslands/SawBlade.glb" id="3_model"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_blade"]
+height = 0.25
+radius = 0.9
+
+[node name="SawBlade" type="Area3D"]
+script = ExtResource("1_hazard")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+shape = SubResource("CylinderShape3D_blade")
+
+[node name="Blade" type="Node3D" parent="."]
+script = ExtResource("2_rotator")
+rotation_speed = Vector3(0, 0, 540)
+
+[node name="Model" parent="Blade" instance=ExtResource("3_model")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
