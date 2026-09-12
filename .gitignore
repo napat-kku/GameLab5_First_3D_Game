@@ -17,3 +17,9 @@ build/
 .mono/
 data_*/
 mono_crash.*.json
+
+# Working files kept out of the repository (they stay on disk)
+PLAN.md
+SUBMISSION.md
+LICENSE.md
+screenshots/
