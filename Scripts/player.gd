@@ -21,6 +21,11 @@ extends CharacterBody3D
 @export var fall_animation := "CharacterArmature|Jump_Idle"
 @export var flip_duration := 0.45
 
+@export_group("Audio")
+## The footstep loop is 0.467 s long and holds two steps.
+## 0.66 stretches it to one run cycle (0.708 s) so the steps land with the feet.
+@export var footstep_pitch := 0.66
+
 @export_group("Game Juice")
 @export var jumpStretchSize := Vector3(0.8, 1.2, 0.8)
 
@@ -122,15 +127,27 @@ func get_input():
 # Handle Player Animations
 func player_animations():
 	particle_trail.emitting = false
-	footsteps.stream_paused = true
 
 	if is_on_floor():
 		if is_moving(): # Checks if player is moving
 			animation.play(run_animation, 0.2)
 			particle_trail.emitting = true
-			footsteps.stream_paused = false
-		else:
-			animation.play(idle_animation, 0.2)
+			start_footsteps()
+			return
+		animation.play(idle_animation, 0.2)
 	elif animation.current_animation != jump_animation:
 		# Loop the in-air pose once the jump clip has finished
 		animation.play(fall_animation, 0.2)
+
+	stop_footsteps()
+
+# Restarting the loop (instead of unpausing it) keeps the two steps inside it
+# in phase with the legs every time the player sets off again
+func start_footsteps():
+	if not footsteps.playing:
+		footsteps.pitch_scale = footstep_pitch * randf_range(0.97, 1.03)
+		footsteps.play()
+
+func stop_footsteps():
+	if footsteps.playing:
+		footsteps.stop()
